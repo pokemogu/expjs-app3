@@ -1,0 +1,19 @@
+version: '3'
+services:
+        mysql:
+                image: mysql:5.6.50
+                container_name: mysql_5.6.50
+                environment:
+                        MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+        node:
+                image: node:14.15.4
+                container_name: node_14.15.4
+                depends_on:
+                        - "mysql"
+                working_dir: /home/node/app
+                user: "node"
+                volumes:
+                        - ./:/home/node/app
+                ports:
+                        - ${NODE_PORT}:${NODE_PORT}
+                command: "npm start"
